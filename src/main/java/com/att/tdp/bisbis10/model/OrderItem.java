@@ -3,7 +3,7 @@ package com.att.tdp.bisbis10.model;
 import jakarta.persistence.*;
 
 @Entity(name = "OrderItems")
-public class OrderItems {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
@@ -18,13 +18,13 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order;
 
-    public OrderItems(){}
-    public OrderItems(Dish dish, int amount, Order order) {
+    public OrderItem(){}
+    public OrderItem(Dish dish, int amount, Order order) {
         this.dishId = dish;
         this.amount = amount;
-        this.orderId = order;
+        this.order = order;
     }
 
     public Long getOrderItemId() {
@@ -42,11 +42,11 @@ public class OrderItems {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-    public Order getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
-    public void setOrderId(Order orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order orderId) {
+        this.order = orderId;
     }
 
 }

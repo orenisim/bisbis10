@@ -2,7 +2,9 @@ package com.att.tdp.bisbis10.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "Orders")
 public class Order {
@@ -14,27 +16,27 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Long restaurantId;
+    private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {
 
     }
-    public Order(Long restaurantId, List<OrderItem> orderItems) {
-        this.restaurantId = restaurantId;
+    public Order(Restaurant restaurant, List<OrderItem> orderItems) {
+        this.restaurant = restaurant;
         this.orderItems = orderItems;
     }
 
     public Long getOrderId() {
         return orderId;
     }
-    public Long getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurantId() {
+        return restaurant;
     }
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurantId(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public List<OrderItem> getOrderItems(){

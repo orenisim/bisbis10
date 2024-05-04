@@ -11,7 +11,7 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private long restaurantId;
+    private Restaurant restaurant;
 
     @Column(name = "rating")
     private double rating;
@@ -19,28 +19,27 @@ public class Rating {
     public Rating() {
 
     }
-
-    //needs to decide what to do rega
-    public Rating(long restaurantId, double rating) {
-        this.restaurantId = restaurantId;
+    public Rating(Restaurant restaurant, double rating) {
+        this.restaurant = restaurant;
         this.rating = rating;
     }
-
     public Long getRatingId() {
         return ratingId;
     }
-    public long getRestaurantId() {
-        return this.restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
     public double getRating() {
-        return this.rating;
+        return rating;
     }
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+
 
 
 

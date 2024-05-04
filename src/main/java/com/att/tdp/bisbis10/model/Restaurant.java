@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.model;
 
+import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")
-    private long restaurantId;
+    private Long restaurantId;
 
     @Column(name = "restaurant_name")
     private String restaurantName;
@@ -18,30 +19,24 @@ public class Restaurant {
     @Column(name = "is_kosher")
     private boolean isKosher;
 
-    @OneToMany(mappedBy = "restaurant_id", cascade = CascadeType.ALL)
-    @Column(name = "restaurant_ratings")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Rating> ratings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "restaurant_id", cascade = CascadeType.ALL)
-    @Column(name = "dishes")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Dish> dishes = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "RestaurantsCuisines",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "cuisine_id")
-    )
-    private List<Cuisine> cuisines = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "restaurants_cuisines" , joinColumns = @JoinColumn(name = "restaurant_id"))
+    @Column(name = "cuisine")
+    private List<String> cuisines = new ArrayList<>();
 
     public Restaurant() {
 
     }
-    public Restaurant(String restaurantName, boolean isKosher, List<Cuisine> cuisines) {
-        super();
-        this.restaurantName = restaurantName;
-        this.isKosher = isKosher;
-        this.cuisines = cuisines;
+    public Restaurant(NewRestaurantDto newRestaurant) {
+        this.restaurantName = newRestaurant.getRestaurantName();
+        this.isKosher = newRestaurant.isKosher();
+        this.cuisines = newRestaurant.getCuisines();
     }
 
     // Getters and Setters
@@ -82,11 +77,11 @@ public class Restaurant {
         this.ratings = ratings;
     }
 
-    public List<Cuisine> getRestaurantCuisines() {
+    public List<String> getRestaurantCuisines() {
         return this.cuisines;
     }
 
-    public void setRestaurantCuisines(List<Cuisine> cuisines) {
+    public void setRestaurantCuisines(List<String> cuisines) {
         this.cuisines = cuisines;
     }
 

@@ -1,5 +1,9 @@
 package com.att.tdp.bisbis10.controller;
 
+import com.att.tdp.bisbis10.dto.NewRestaurantDto;
+import com.att.tdp.bisbis10.dto.RestaurantDto;
+import com.att.tdp.bisbis10.model.Restaurant;
+import com.att.tdp.bisbis10.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +19,14 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping
-    public ResponseEntity<List<Restaurant>> getAllRestaurants(){
-        List<Restaurant> restaurants = restaurantService.getAllRestaurants;
-        return new ResponseEntity<>(restaurants, HttpStatus.ok);
+    public ResponseEntity<List<RestaurantDto>> getAllRestaurants(){
+        List<RestaurantDto> restaurants = restaurantService.getAllRestaurants();
+        return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping(params = "cuisine")
-    public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@RequestParam String cuisineName) {
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByCuisine(cuisineName);
+    public ResponseEntity<List<RestaurantDto>> getRestaurantsByCuisine(@RequestParam String cuisineName) {
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsByCuisine(cuisineName);
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
@@ -33,8 +37,8 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addRestaurant(@RequestBody Restaurant restaurant) {
-        restaurantService.addRestaurant(restaurant);
+    public ResponseEntity<Void> addRestaurant(@RequestBody NewRestaurantDto newRestaurant) {
+        restaurantService.addRestaurant(newRestaurant);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

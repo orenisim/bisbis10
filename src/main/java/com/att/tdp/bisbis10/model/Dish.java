@@ -21,16 +21,16 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private long restaurantId;
+    private Restaurant restaurant;
 
     public Dish() {
 
     }
-    public Dish(String dishName, String description, double price, long restaurantId) {
+    public Dish(String dishName, String description, double price, Restaurant restaurant) {
         this.dishName = dishName;
         this.description = description;
         this.price = price;
-        this.restaurantId = restaurantId;
+        this.restaurant = restaurant;
     }
     public Long getDishId() {
         return dishId;
@@ -53,11 +53,11 @@ public class Dish {
     public void setPrice(double price) {
         this.price = price;
     }
-    public long getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
 }
