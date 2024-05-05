@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.controller;
 
+import com.att.tdp.bisbis10.dto.NewRatingDto;
 import com.att.tdp.bisbis10.model.Rating;
 import com.att.tdp.bisbis10.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class RatingController {
     private RatingService ratingService;
 
     @PostMapping
-    public ResponseEntity<Void> addRating(@RequestBody Rating rating) {
-        ratingService.addRating(rating);
+    public ResponseEntity<Void> addRating(@RequestBody NewRatingDto newRating) {
+        ratingService.addRating(newRating);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

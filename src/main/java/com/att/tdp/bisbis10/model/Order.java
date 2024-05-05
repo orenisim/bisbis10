@@ -10,9 +10,9 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id")
-    private Long orderId;
+    private UUID orderId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
@@ -29,13 +29,13 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public Long getOrderId() {
+    public UUID getOrderId() {
         return orderId;
     }
-    public Restaurant getRestaurantId() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
-    public void setRestaurantId(Restaurant restaurant) {
+    public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
 

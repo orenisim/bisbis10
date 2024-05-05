@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
+import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
 import com.att.tdp.bisbis10.dto.RestaurantDto;
 import com.att.tdp.bisbis10.model.Restaurant;
 import com.att.tdp.bisbis10.service.RestaurantService;
@@ -25,14 +26,15 @@ public class RestaurantController {
     }
 
     @GetMapping(params = "cuisine")
-    public ResponseEntity<List<RestaurantDto>> getRestaurantsByCuisine(@RequestParam String cuisineName) {
-        List<RestaurantDto> restaurants = restaurantService.getRestaurantsByCuisine(cuisineName);
+    public ResponseEntity<List<RestaurantDto>> getRestaurantsByCuisine(@RequestParam String cuisine) {
+        System.out.println("------- Check QUery -----" + cuisine);
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable long id) {
-        Restaurant restaurant = restaurantService.getRestaurantById(id);
+    public ResponseEntity<RestaurantByIdDto> getRestaurantById(@PathVariable long id) {
+        RestaurantByIdDto restaurant = restaurantService.getRestaurantById(id);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
@@ -43,8 +45,8 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateRestaurantById(@PathVariable long id, @RequestBody Restaurant restaurant) {
-        restaurantService.updateRestaurantById(id, restaurant);
+    public ResponseEntity<Void> updateRestaurantById(@PathVariable long id, @RequestBody NewRestaurantDto updatedRestaurant) {
+        restaurantService.updateRestaurantById(id, updatedRestaurant);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

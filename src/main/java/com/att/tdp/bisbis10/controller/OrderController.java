@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.controller;
 
+import com.att.tdp.bisbis10.dto.NewOrderDto;
 import com.att.tdp.bisbis10.model.Order;
 import com.att.tdp.bisbis10.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Long> placeOrder(@RequestBody Order order) {
-        Long orderId = orderService.placeOrder(order.getRestaurantId(), order.getOrderItems());
+    public ResponseEntity<UUID> placeOrder(@RequestBody NewOrderDto newOrder) {
+        UUID orderId = orderService.placeOrder(newOrder.getRestaurantId(), newOrder.getOrderItems());
+        if (orderId == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(orderId, HttpStatus.OK);
     }
 }

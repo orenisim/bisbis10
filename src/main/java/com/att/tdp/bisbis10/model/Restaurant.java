@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.model;
 
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -30,12 +31,17 @@ public class Restaurant {
     @Column(name = "cuisine")
     private List<String> cuisines = new ArrayList<>();
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
     public Restaurant() {
 
     }
     public Restaurant(NewRestaurantDto newRestaurant) {
-        this.restaurantName = newRestaurant.getRestaurantName();
-        this.isKosher = newRestaurant.isKosher();
+        //Test -->
+        newRestaurant.print();
+        this.restaurantName = newRestaurant.getName();
+        this.isKosher = newRestaurant.getIsKosher();
         this.cuisines = newRestaurant.getCuisines();
     }
 
@@ -46,7 +52,7 @@ public class Restaurant {
     }
 
     public String getRestaurantName() {
-        return this.restaurantName;
+        return restaurantName;
     }
 
     public void setName(String restaurantName) {
@@ -85,5 +91,14 @@ public class Restaurant {
         this.cuisines = cuisines;
     }
 
+
+    //Testing Function -->
+    public void print() {
+        System.out.println("Checking how body looks like in PUT: ");
+        System.out.println(this.getRestaurantName());
+        System.out.println(this.isKosher());
+        System.out.println(this.getRestaurantCuisines());
+
+    }
 
 }

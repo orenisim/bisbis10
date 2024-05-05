@@ -1,7 +1,9 @@
 package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
+import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
 import com.att.tdp.bisbis10.dto.RestaurantDto;
+import com.att.tdp.bisbis10.mapper.RestaurantMapper;
 import com.att.tdp.bisbis10.model.Rating;
 import com.att.tdp.bisbis10.model.Restaurant;
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
@@ -17,6 +19,8 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
+    private RestaurantMapper restaurantMapper;
+
     public List<RestaurantDto> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         List<RestaurantDto> restaurantDtos = new ArrayList<>();
@@ -26,8 +30,8 @@ public class RestaurantService {
         return restaurantDtos;
     }
 
-    public List<RestaurantDto> getRestaurantsByCuisine(String cuisineName) {
-        List<Restaurant> restaurantsByCuisineName = restaurantRepository.findByCuisinesContaining(cuisineName);
+    public List<RestaurantDto> getRestaurantsByCuisine(String cuisine) {
+        List<Restaurant> restaurantsByCuisineName = restaurantRepository.findByCuisinesContaining(cuisine);
         List<RestaurantDto> restaurantDtos = new ArrayList<>();
         for (Restaurant restaurant : restaurantsByCuisineName) {
             restaurantDtos.add(restaurantToRestaurantDto(restaurant));
@@ -35,27 +39,28 @@ public class RestaurantService {
         return restaurantDtos;
     }
 
-    public Restaurant getRestaurantById(long restaurantId) {
-        return restaurantRepository.findById(restaurantId).orElse(null);
+    public RestaurantByIdDto getRestaurantById(long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
+        return restaurantMapper.toRestaurantByIdDto(restaurant);
     }
 
 
     public void addRestaurant(NewRestaurantDto newRestaurant) {
-        Restaurant restaurant = new Restaurant(newRestaurant);
+        Restaurant restaurant = restaurantMapper.toRestaurant(newRestaurant);
         restaurantRepository.save(restaurant);
     }
 
-    public void updateRestaurantById(long id, Restaurant updatedRestaurant) {
+    public void updateRestaurantById(long id, NewRestaurantDto updatedRestaurant) {
         Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
         if (restaurant != null) {
-            if (updatedRestaurant.getRestaurantCuisines() != null) {
-                restaurant.setRestaurantCuisines(updatedRestaurant.getRestaurantCuisines());
+            if (updatedRestaurant.getCuisines() != null) {
+                restaurant.setRestaurantCuisines(updatedRestaurant.getCuisines());
             }
-            if (updatedRestaurant.getRestaurantName() != null) {
-                restaurant.setName(updatedRestaurant.getRestaurantName());
+            if (updatedRestaurant.getName() != null) {
+                restaurant.setName(updatedRestaurant.getName());
             }
-            if (updatedRestaurant.isKosher() != restaurant.isKosher()) {
-                restaurant.setKosher(updatedRestaurant.isKosher());
+            if (updatedRestaurant.getIsKosher() != restaurant.isKosher()) {
+                restaurant.setKosher(updatedRestaurant.getIsKosher());
             }
             restaurantRepository.save(restaurant);
         }
@@ -74,7 +79,7 @@ public class RestaurantService {
         restaurantDto.setRestaurantId(restaurant.getRestaurantId());
         restaurantDto.setRestaurantName(restaurant.getRestaurantName());
         restaurantDto.setAverageRating(averageRating(restaurant.getRestaurantRatings()));
-        restaurantDto.setKosher(restaurant.isKosher());
+        restaurantDto.setIsKosher(restaurant.isKosher());
         restaurantDto.setCuisines(restaurant.getRestaurantCuisines());
         return restaurantDto;
     }

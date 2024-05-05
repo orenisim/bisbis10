@@ -1,14 +1,13 @@
 package com.att.tdp.bisbis10.dto;
 
-
+import com.att.tdp.bisbis10.model.Dish;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
 
-//this model is responsible for the correct data transfer to the clinet
-@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines"})
-public class RestaurantDto {
+@JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines", "dishes"})
+public class RestaurantByIdDto {
     @JsonProperty("id")
     private long restaurantId;
     @JsonProperty("name")
@@ -19,15 +18,18 @@ public class RestaurantDto {
     private boolean isKosher;
     @JsonProperty("cuisines")
     private List<String> cuisines;
+    @JsonProperty("dishes")
+    private List<DishDto> dishes;
 
-    public RestaurantDto() {}
+    public RestaurantByIdDto() {}
 
-    public RestaurantDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines) {
+    public RestaurantByIdDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines, List<DishDto> dishes) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.averageRating = averageRating;
         this.isKosher = isKosher;
         this.cuisines = cuisines;
+        this.dishes = dishes;
     }
 
     // Getters
@@ -50,6 +52,9 @@ public class RestaurantDto {
     public List<String> getCuisines() {
         return cuisines;
     }
+    public List<DishDto> getDishes() {
+        return dishes;
+    }
 
     // Setters
     public void setRestaurantId(long restaurantId) {
@@ -71,6 +76,7 @@ public class RestaurantDto {
     public void setCuisines(List<String> cuisines) {
         this.cuisines = cuisines;
     }
-
-
+    public void setDishes(List<DishDto> dishes) {
+        this.dishes = dishes;
+    }
 }
