@@ -8,7 +8,7 @@ import java.util.List;
 
 //this model is responsible for the correct data transfer to the clinet
 @JsonPropertyOrder({"id", "name", "averageRating", "isKosher", "cuisines"})
-public class RestaurantDto {
+public class RestaurantsResponseDto {
     @JsonProperty("id")
     private long restaurantId;
     @JsonProperty("name")
@@ -20,9 +20,9 @@ public class RestaurantDto {
     @JsonProperty("cuisines")
     private List<String> cuisines;
 
-    public RestaurantDto() {}
+    public RestaurantsResponseDto() {}
 
-    public RestaurantDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines) {
+    public RestaurantsResponseDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.averageRating = averageRating;

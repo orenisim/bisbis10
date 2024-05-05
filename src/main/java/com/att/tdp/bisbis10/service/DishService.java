@@ -1,6 +1,6 @@
 package com.att.tdp.bisbis10.service;
 
-import com.att.tdp.bisbis10.dto.DishDto;
+import com.att.tdp.bisbis10.dto.DishResponseDto;
 import com.att.tdp.bisbis10.dto.NewDishDto;
 import com.att.tdp.bisbis10.mapper.Mapper;
 import com.att.tdp.bisbis10.model.Dish;
@@ -70,10 +70,10 @@ public class DishService {
 
     }
 
-    public List<DishDto> getDishesByRestaurantId(long restaurantId) {
+    public List<DishResponseDto> getDishesByRestaurantId(long restaurantId) {
         List<Dish> dishes = dishRepository.findByRestaurantRestaurantId(restaurantId);
-        List<DishDto> dishDtos = mapper.createListOfDishDto(dishes);
-        return dishDtos;
+        List<DishResponseDto> dishResponseDtos = mapper.createListOfDishDto(dishes);
+        return dishResponseDtos;
     }
 
     public boolean existsById(Long dishId) {

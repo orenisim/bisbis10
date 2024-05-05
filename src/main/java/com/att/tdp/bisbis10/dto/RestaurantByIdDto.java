@@ -1,6 +1,5 @@
 package com.att.tdp.bisbis10.dto;
 
-import com.att.tdp.bisbis10.model.Dish;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -19,11 +18,11 @@ public class RestaurantByIdDto {
     @JsonProperty("cuisines")
     private List<String> cuisines;
     @JsonProperty("dishes")
-    private List<DishDto> dishes;
+    private List<DishResponseDto> dishes;
 
     public RestaurantByIdDto() {}
 
-    public RestaurantByIdDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines, List<DishDto> dishes) {
+    public RestaurantByIdDto(long restaurantId, String restaurantName, double averageRating, boolean isKosher, List<String> cuisines, List<DishResponseDto> dishes) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.averageRating = averageRating;
@@ -52,7 +51,7 @@ public class RestaurantByIdDto {
     public List<String> getCuisines() {
         return cuisines;
     }
-    public List<DishDto> getDishes() {
+    public List<DishResponseDto> getDishes() {
         return dishes;
     }
 
@@ -76,7 +75,7 @@ public class RestaurantByIdDto {
     public void setCuisines(List<String> cuisines) {
         this.cuisines = cuisines;
     }
-    public void setDishes(List<DishDto> dishes) {
+    public void setDishes(List<DishResponseDto> dishes) {
         this.dishes = dishes;
     }
 }

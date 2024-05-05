@@ -1,6 +1,6 @@
 package com.att.tdp.bisbis10.controller;
 
-import com.att.tdp.bisbis10.dto.DishDto;
+import com.att.tdp.bisbis10.dto.DishResponseDto;
 import com.att.tdp.bisbis10.dto.NewDishDto;
 import com.att.tdp.bisbis10.service.DishService;
 import com.att.tdp.bisbis10.service.ValidationService;
@@ -64,10 +64,10 @@ public class DishController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DishDto>> getDishesByRestaurantId(@PathVariable long id) {
+    public ResponseEntity<List<DishResponseDto>> getDishesByRestaurantId(@PathVariable long id) {
         try {
             logger.info("Fetching dishes for restaurant with ID {}", id);
-            List<DishDto> dishes = dishService.getDishesByRestaurantId(id);
+            List<DishResponseDto> dishes = dishService.getDishesByRestaurantId(id);
             return new ResponseEntity<>(dishes, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Failed to fetch dishes: {}", e.getMessage());

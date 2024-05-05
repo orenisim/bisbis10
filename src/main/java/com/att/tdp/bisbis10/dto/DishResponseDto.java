@@ -1,14 +1,18 @@
 package com.att.tdp.bisbis10.dto;
 
-public class DishDto {
+
+//Represent the Dish that comes back in the response
+public class DishResponseDto {
     private Long id;
     private String name;
     private String description;
     private double price;
 
-    public DishDto() {}
 
-    public DishDto(Long id, String name, String description, double price) {
+
+    public DishResponseDto() {}
+
+    public DishResponseDto(Long id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;

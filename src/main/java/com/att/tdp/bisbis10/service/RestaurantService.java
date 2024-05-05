@@ -2,7 +2,7 @@ package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
-import com.att.tdp.bisbis10.dto.RestaurantDto;
+import com.att.tdp.bisbis10.dto.RestaurantsResponseDto;
 import com.att.tdp.bisbis10.mapper.Mapper;
 import com.att.tdp.bisbis10.model.Rating;
 import com.att.tdp.bisbis10.model.Restaurant;
@@ -21,22 +21,22 @@ public class RestaurantService {
 
     private Mapper mapper;
 
-    public List<RestaurantDto> getAllRestaurants() {
+    public List<RestaurantsResponseDto> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
-        List<RestaurantDto> restaurantDtos = new ArrayList<>();
+        List<RestaurantsResponseDto> restaurantsResponseDtos = new ArrayList<>();
         for (Restaurant restaurant : restaurants) {
-            restaurantDtos.add(restaurantToRestaurantDto(restaurant));
+            restaurantsResponseDtos.add(restaurantToRestaurantDto(restaurant));
         }
-        return restaurantDtos;
+        return restaurantsResponseDtos;
     }
 
-    public List<RestaurantDto> getRestaurantsByCuisine(String cuisine) {
+    public List<RestaurantsResponseDto> getRestaurantsByCuisine(String cuisine) {
         List<Restaurant> restaurantsByCuisineName = restaurantRepository.findByCuisinesContaining(cuisine);
-        List<RestaurantDto> restaurantDtos = new ArrayList<>();
+        List<RestaurantsResponseDto> restaurantsResponseDtos = new ArrayList<>();
         for (Restaurant restaurant : restaurantsByCuisineName) {
-            restaurantDtos.add(restaurantToRestaurantDto(restaurant));
+            restaurantsResponseDtos.add(restaurantToRestaurantDto(restaurant));
         }
-        return restaurantDtos;
+        return restaurantsResponseDtos;
     }
 
     public RestaurantByIdDto getRestaurantById(long restaurantId) {
@@ -74,14 +74,14 @@ public class RestaurantService {
 
 
     //Helper function-
-    private RestaurantDto restaurantToRestaurantDto(Restaurant restaurant) {
-        RestaurantDto restaurantDto = new RestaurantDto();
-        restaurantDto.setRestaurantId(restaurant.getRestaurantId());
-        restaurantDto.setRestaurantName(restaurant.getRestaurantName());
-        restaurantDto.setAverageRating(averageRating(restaurant.getRestaurantRatings()));
-        restaurantDto.setIsKosher(restaurant.isKosher());
-        restaurantDto.setCuisines(restaurant.getRestaurantCuisines());
-        return restaurantDto;
+    private RestaurantsResponseDto restaurantToRestaurantDto(Restaurant restaurant) {
+        RestaurantsResponseDto restaurantsResponseDto = new RestaurantsResponseDto();
+        restaurantsResponseDto.setRestaurantId(restaurant.getRestaurantId());
+        restaurantsResponseDto.setRestaurantName(restaurant.getRestaurantName());
+        restaurantsResponseDto.setAverageRating(averageRating(restaurant.getRestaurantRatings()));
+        restaurantsResponseDto.setIsKosher(restaurant.isKosher());
+        restaurantsResponseDto.setCuisines(restaurant.getRestaurantCuisines());
+        return restaurantsResponseDto;
     }
 
     private double averageRating(List<Rating> ratings) {

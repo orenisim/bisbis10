@@ -1,6 +1,6 @@
 package com.att.tdp.bisbis10.mapper;
 
-import com.att.tdp.bisbis10.dto.DishDto;
+import com.att.tdp.bisbis10.dto.DishResponseDto;
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
 import com.att.tdp.bisbis10.model.Dish;
@@ -34,16 +34,16 @@ public class Mapper {
         return restaurantByIdDto;
     }
 
-    public static List<DishDto> createListOfDishDto(List<Dish> dishesRestaurant) {
-        List<DishDto> dishDtos = new ArrayList<DishDto>();
+    public static List<DishResponseDto> createListOfDishDto(List<Dish> dishesRestaurant) {
+        List<DishResponseDto> dishResponseDtos = new ArrayList<DishResponseDto>();
         for (Dish dish : dishesRestaurant) {
-            DishDto dishDto = new DishDto();
-            dishDto.setId(dish.getDishId());
-            dishDto.setName(dish.getDishName());
-            dishDto.setDescription(dish.getDescription());
-            dishDto.setPrice(dish.getPrice());
-            dishDtos.add(dishDto);
+            DishResponseDto dishResponseDto = new DishResponseDto();
+            dishResponseDto.setId(dish.getDishId());
+            dishResponseDto.setName(dish.getDishName());
+            dishResponseDto.setDescription(dish.getDescription());
+            dishResponseDto.setPrice(dish.getPrice());
+            dishResponseDtos.add(dishResponseDto);
         }
-        return dishDtos;
+        return dishResponseDtos;
     }
 }

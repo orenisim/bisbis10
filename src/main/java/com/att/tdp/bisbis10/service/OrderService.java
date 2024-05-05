@@ -1,6 +1,6 @@
 package com.att.tdp.bisbis10.service;
 
-import com.att.tdp.bisbis10.dto.OrderItemDto;
+import com.att.tdp.bisbis10.dto.OrderItemRequestBodyDto;
 import com.att.tdp.bisbis10.exception.ValidationException;
 import com.att.tdp.bisbis10.model.*;
 import com.att.tdp.bisbis10.repository.OrderItemsRepository;
@@ -27,13 +27,13 @@ public class OrderService {
 
 
 
-    public UUID placeOrder(Long restaurantId, List<OrderItemDto> orderItems) {
+    public UUID placeOrder(Long restaurantId, List<OrderItemRequestBodyDto> orderItems) {
         Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
         if (restaurantOptional.isPresent()) {
             Restaurant restaurant = restaurantOptional.get();
 
             // Check if all dish IDs belong to the specified restaurant
-            List<Long> dishIds = orderItems.stream().map(OrderItemDto::getDishId).collect(Collectors.toList());
+            List<Long> dishIds = orderItems.stream().map(OrderItemRequestBodyDto::getDishId).collect(Collectors.toList());
             boolean allDishesBelongToRestaurant = restaurant.getRestaurantDishes().stream()
                     .map(Dish::getDishId)
                     .allMatch(dishIds::contains);
@@ -47,7 +47,7 @@ public class OrderService {
             order.setRestaurant(restaurant);
             UUID orderId = orderRepository.save(order).getOrderId();
             List<OrderItem> orderItemList = new ArrayList<>();
-            for (OrderItemDto orderItem : orderItems) {
+            for (OrderItemRequestBodyDto orderItem : orderItems) {
                 Dish dish = restaurant.getRestaurantDishes().stream()
                         .filter(d -> d.getDishId().equals(orderItem.getDishId()))
                         .findFirst()

@@ -69,12 +69,12 @@ public class ValidationService {
         if (CollectionUtils.isEmpty(newOrder.getOrderItems())) {
             throw new ValidationException("Order items cannot be empty");
         }
-        for (OrderItemDto orderItem : newOrder.getOrderItems()) {
+        for (OrderItemRequestBodyDto orderItem : newOrder.getOrderItems()) {
             validateOrderItem(orderItem);
         }
     }
 
-    private void validateOrderItem(OrderItemDto orderItem) {
+    private void validateOrderItem(OrderItemRequestBodyDto orderItem) {
         // Validate dish ID
         if (orderItem.getDishId() == null || orderItem.getDishId() <= 0 || !dishService.existsById(orderItem.getDishId())) {
             throw new ValidationException("Invalid dish ID");

@@ -2,7 +2,7 @@ package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
-import com.att.tdp.bisbis10.dto.RestaurantDto;
+import com.att.tdp.bisbis10.dto.RestaurantsResponseDto;
 import com.att.tdp.bisbis10.service.RestaurantService;
 import com.att.tdp.bisbis10.service.ValidationService;
 import org.slf4j.Logger;
@@ -27,16 +27,16 @@ public class RestaurantController {
     private ValidationService validationService;
 
     @GetMapping
-    public ResponseEntity<List<RestaurantDto>> getAllRestaurants(){
+    public ResponseEntity<List<RestaurantsResponseDto>> getAllRestaurants(){
         logger.info("Fetching all restaurants");
-        List<RestaurantDto> restaurants = restaurantService.getAllRestaurants();
+        List<RestaurantsResponseDto> restaurants = restaurantService.getAllRestaurants();
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping(params = "cuisine")
-    public ResponseEntity<List<RestaurantDto>> getRestaurantsByCuisine(@RequestParam String cuisine) {
+    public ResponseEntity<List<RestaurantsResponseDto>> getRestaurantsByCuisine(@RequestParam String cuisine) {
         logger.info("Fetching restaurants by cuisine: " + cuisine);
-        List<RestaurantDto> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
+        List<RestaurantsResponseDto> restaurants = restaurantService.getRestaurantsByCuisine(cuisine);
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 

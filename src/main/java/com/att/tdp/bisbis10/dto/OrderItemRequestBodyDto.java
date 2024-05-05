@@ -1,13 +1,14 @@
 package com.att.tdp.bisbis10.dto;
 
-public class OrderItemDto {
+//Represent how OrderItem looks in the  list in the post body to the order API
+public class OrderItemRequestBodyDto {
     private Long dishId;
     int amount;
 
-    public OrderItemDto(){
+    public OrderItemRequestBodyDto(){
 
     }
-    public OrderItemDto(Long dishId, int amount) {
+    public OrderItemRequestBodyDto(Long dishId, int amount) {
         this.dishId = dishId;
         this.amount = amount;
     }
