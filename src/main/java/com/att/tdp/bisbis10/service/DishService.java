@@ -2,7 +2,7 @@ package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.DishDto;
 import com.att.tdp.bisbis10.dto.NewDishDto;
-import com.att.tdp.bisbis10.mapper.RestaurantMapper;
+import com.att.tdp.bisbis10.mapper.Mapper;
 import com.att.tdp.bisbis10.model.Dish;
 import com.att.tdp.bisbis10.model.Restaurant;
 import com.att.tdp.bisbis10.repository.DishRepository;
@@ -21,7 +21,7 @@ public class DishService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    private RestaurantMapper restaurantMapper;
+    private Mapper mapper;
 
     public void addDishToRestaurantById(Long restaurantId, NewDishDto newDish) {
         Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
@@ -67,7 +67,11 @@ public class DishService {
 
     public List<DishDto> getDishesByRestaurantId(long restaurantId) {
         List<Dish> dishes = dishRepository.findByRestaurantRestaurantId(restaurantId);
-        List<DishDto> dishDtos = restaurantMapper.createListOfDishDto(dishes);
+        List<DishDto> dishDtos = mapper.createListOfDishDto(dishes);
         return dishDtos;
+    }
+
+    public boolean existsById(Long dishId) {
+        return dishRepository.existsById(dishId);
     }
 }

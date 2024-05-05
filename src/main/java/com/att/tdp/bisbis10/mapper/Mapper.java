@@ -3,14 +3,15 @@ package com.att.tdp.bisbis10.mapper;
 import com.att.tdp.bisbis10.dto.DishDto;
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
-import com.att.tdp.bisbis10.dto.RestaurantDto;
 import com.att.tdp.bisbis10.model.Dish;
 import com.att.tdp.bisbis10.model.Restaurant;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantMapper {
+@Service
+public class Mapper {
 
     public static Restaurant toRestaurant(NewRestaurantDto newRestaurant) {
         System.out.println("----Test-----");

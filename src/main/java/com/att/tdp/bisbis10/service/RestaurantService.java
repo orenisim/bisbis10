@@ -3,7 +3,7 @@ package com.att.tdp.bisbis10.service;
 import com.att.tdp.bisbis10.dto.NewRestaurantDto;
 import com.att.tdp.bisbis10.dto.RestaurantByIdDto;
 import com.att.tdp.bisbis10.dto.RestaurantDto;
-import com.att.tdp.bisbis10.mapper.RestaurantMapper;
+import com.att.tdp.bisbis10.mapper.Mapper;
 import com.att.tdp.bisbis10.model.Rating;
 import com.att.tdp.bisbis10.model.Restaurant;
 import com.att.tdp.bisbis10.repository.RestaurantRepository;
@@ -19,7 +19,7 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    private RestaurantMapper restaurantMapper;
+    private Mapper mapper;
 
     public List<RestaurantDto> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
@@ -41,12 +41,12 @@ public class RestaurantService {
 
     public RestaurantByIdDto getRestaurantById(long restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElse(null);
-        return restaurantMapper.toRestaurantByIdDto(restaurant);
+        return mapper.toRestaurantByIdDto(restaurant);
     }
 
 
     public void addRestaurant(NewRestaurantDto newRestaurant) {
-        Restaurant restaurant = restaurantMapper.toRestaurant(newRestaurant);
+        Restaurant restaurant = mapper.toRestaurant(newRestaurant);
         restaurantRepository.save(restaurant);
     }
 
