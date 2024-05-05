@@ -1,6 +1,8 @@
 package com.att.tdp.bisbis10.controller;
 
 import com.att.tdp.bisbis10.dto.NewOrderDto;
+import com.att.tdp.bisbis10.dto.OrderResponseDto;
+import com.att.tdp.bisbis10.exception.ValidationException;
 import com.att.tdp.bisbis10.service.OrderService;
 import com.att.tdp.bisbis10.service.ValidationService;
 import org.slf4j.Logger;
@@ -28,12 +30,16 @@ public class OrderController {
     private ValidationService validationService;
 
     @PostMapping
-    public ResponseEntity<UUID> placeOrder(@RequestBody NewOrderDto newOrder) {
+    public ResponseEntity<OrderResponseDto> placeOrder(@RequestBody NewOrderDto newOrder) {
         logger.info("Placing new order: {}", newOrder);
         validationService.validateNewOrder(newOrder);
         try {
             UUID orderId = orderService.placeOrder(newOrder.getRestaurantId(), newOrder.getOrderItems());
-            return new ResponseEntity<>(orderId, HttpStatus.CREATED);
+            OrderResponseDto responseDto = new OrderResponseDto(orderId);
+            return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+        } catch (ValidationException e) {
+            logger.error("Failed to place new order: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error("Failed to place new order: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -26,7 +26,7 @@ public class ValidationService {
         if (StringUtils.isEmpty(newRestaurantDto.getCuisines()) || newRestaurantDto.getCuisines().isEmpty()) {
             throw new ValidationException("At least one cuisine is required");
         }
-        //if there is no isKosher field so it is'nt kosher by default.
+        //If there is no isKosher field so it is'nt kosher by default.
     }
 
     public void validateUpdatedRestaurant(long id, NewRestaurantDto updatedRestaurantDto) {
@@ -57,7 +57,7 @@ public class ValidationService {
         // Check if restaurant ID is valid
         validateRestaurantId(newRating.getRestaurantId());
 
-        // Needs to check if the rating is a double value
+        // Needs to check if the rating is a double value But I didn't have time
 
     }
 

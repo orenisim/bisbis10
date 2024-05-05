@@ -29,7 +29,7 @@ public class RatingService {
             rating.setRestaurant(restaurant);
             rating.setRating(newRating.getRating());
 
-            // Save the rating
+
             ratingRepository.save(rating);
 
 

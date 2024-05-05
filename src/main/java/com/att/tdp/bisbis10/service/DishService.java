@@ -35,12 +35,14 @@ public class DishService {
             dish.setDescription(newDish.getDescription());
             dish.setPrice(newDish.getPrice());
 
-            // Save the Dish
             dishRepository.save(dish);
         }
     }
 
     public void updateDishById(long restaurantId, long dishId , NewDishDto updatedDish) {
+
+        //Could use different implementation that will use the restaurantId field also
+
         Dish dish = dishRepository.findById(dishId).orElse(null);
 
         if (dish != null) {
@@ -58,6 +60,9 @@ public class DishService {
     }
 
     public void deleteDishById(long restaurantId, long dishId) {
+
+        //Could use different implementation that will use the restaurantId field also
+
         Dish dish = dishRepository.findById(dishId).orElse(null);
         if (dish != null) {
             dishRepository.delete(dish);

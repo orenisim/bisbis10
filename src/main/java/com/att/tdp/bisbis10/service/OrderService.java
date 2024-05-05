@@ -1,6 +1,7 @@
 package com.att.tdp.bisbis10.service;
 
 import com.att.tdp.bisbis10.dto.OrderItemDto;
+import com.att.tdp.bisbis10.exception.ValidationException;
 import com.att.tdp.bisbis10.model.*;
 import com.att.tdp.bisbis10.repository.OrderItemsRepository;
 import com.att.tdp.bisbis10.repository.OrderRepository;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -24,12 +26,23 @@ public class OrderService {
     private OrderItemsRepository orderItemsRepository;
 
 
+
     public UUID placeOrder(Long restaurantId, List<OrderItemDto> orderItems) {
         Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
         if (restaurantOptional.isPresent()) {
             Restaurant restaurant = restaurantOptional.get();
 
-            // Create a new Rating entity
+            // Check if all dish IDs belong to the specified restaurant
+            List<Long> dishIds = orderItems.stream().map(OrderItemDto::getDishId).collect(Collectors.toList());
+            boolean allDishesBelongToRestaurant = restaurant.getRestaurantDishes().stream()
+                    .map(Dish::getDishId)
+                    .allMatch(dishIds::contains);
+
+            if (!allDishesBelongToRestaurant) {
+                throw new ValidationException("Restaurant does not belong to any dish");
+            }
+
+
             Order order = new Order();
             order.setRestaurant(restaurant);
             UUID orderId = orderRepository.save(order).getOrderId();
@@ -40,19 +53,19 @@ public class OrderService {
                         .findFirst()
                         .orElse(null);
                 if(dish != null) {
-                    OrderItem orderItem1 = new OrderItem();
-                    orderItem1.setOrder(order);
-                    orderItem1.setAmount(orderItem.getAmount());
-                    orderItem1.setDishId(dish);
-                    orderItemList.add(orderItem1);
-                    orderItemsRepository.save(orderItem1);
+                    OrderItem newOrderItem = new OrderItem();
+                    newOrderItem.setOrder(order);
+                    newOrderItem.setAmount(orderItem.getAmount());
+                    newOrderItem.setDishId(dish);
+                    orderItemList.add(newOrderItem);
+                    orderItemsRepository.save(newOrderItem);
                 }
 
             }
 
             return orderId;
         }
-        return null;
+        throw new ValidationException("Restaurant does not belong to any dish");
     }
 
 }

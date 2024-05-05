@@ -73,7 +73,7 @@ public class RestaurantService {
 
 
 
-    //helper function-
+    //Helper function-
     private RestaurantDto restaurantToRestaurantDto(Restaurant restaurant) {
         RestaurantDto restaurantDto = new RestaurantDto();
         restaurantDto.setRestaurantId(restaurant.getRestaurantId());

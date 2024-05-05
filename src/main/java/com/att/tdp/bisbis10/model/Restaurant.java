@@ -38,8 +38,6 @@ public class Restaurant {
 
     }
     public Restaurant(NewRestaurantDto newRestaurant) {
-        //Test -->
-        newRestaurant.print();
         this.restaurantName = newRestaurant.getName();
         this.isKosher = newRestaurant.getIsKosher();
         this.cuisines = newRestaurant.getCuisines();
@@ -91,14 +89,5 @@ public class Restaurant {
         this.cuisines = cuisines;
     }
 
-
-    //Testing Function -->
-    public void print() {
-        System.out.println("Checking how body looks like in PUT: ");
-        System.out.println(this.getRestaurantName());
-        System.out.println(this.isKosher());
-        System.out.println(this.getRestaurantCuisines());
-
-    }
 
 }
